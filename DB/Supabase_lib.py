@@ -78,7 +78,30 @@ class MedidasDB(BaseSupabaseDB):
         except Exception as e:
             print(f"Error al leer medidas entre {timestamp_inicio} y {timestamp_fin} en {self.tabla}: {e}")
             return []
-        
+    
+    def leer_ultimas_medidas(self):
+        try:
+            response = (
+            self.supabase.table(self.tabla)
+            .select('id_sensor, Medida, Unidad, created_at')
+            .order("created_at", desc=True)
+            .execute()
+            )
+            if not response.data:
+                return []
+
+            # Filtrar las últimas medidas por cada id_sensor
+            ultimas_medidas = {}
+            for medida in response.data:
+                id_sensor = medida["id_sensor"]
+            if id_sensor not in ultimas_medidas:
+                ultimas_medidas[id_sensor] = medida
+
+            return list(ultimas_medidas.values())
+        except Exception as e:
+            print(f"Error al leer las últimas medidas en {self.tabla}: {e}")
+            return []
+
     def insertar(self, sensor, medida, unidad = None):
         response = (self.supabase.table("Sensores")
                      .select('id')
@@ -107,3 +130,7 @@ class SensoresDB(BaseSupabaseDB):
             "Descripción": descripcion
         }
         return super().insertar(self.tabla, datos)
+    
+    def leer_sensores(self):
+        response = self.supabase.table(self.tabla).select('*').execute()
+        return response.data if response.data else None
