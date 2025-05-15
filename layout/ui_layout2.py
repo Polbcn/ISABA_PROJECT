@@ -4,7 +4,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(420, 320)
+        MainWindow.resize(480, 360)
 
         self.create_central_widget(MainWindow)
         self.add_logo(MainWindow)
@@ -22,7 +22,7 @@ class Ui_MainWindow(object):
 
     def add_logo(self, parent_widget):
         self.logo = QtWidgets.QLabel(parent_widget)
-        self.logo.setGeometry(QtCore.QRect(350, 5, 50, 50))  # Posición ajustada
+        self.logo.setGeometry(QtCore.QRect(410, 5, 60, 60))
 
         pixmap = QtGui.QPixmap("resources/logo.png")
         pixmap = pixmap.scaled(self.logo.width(), self.logo.height(),
@@ -39,35 +39,35 @@ class Ui_MainWindow(object):
 
     def create_navigation_buttons(self):
         self.btn_inicio = QtWidgets.QPushButton("Empezar", self.centralwidget)
-        self.btn_inicio.setGeometry(QtCore.QRect(5, 5, 55, 25))
+        self.btn_inicio.setGeometry(QtCore.QRect(5, 5, 60, 28))
 
         self.btn_carga = QtWidgets.QPushButton("Carga Agua", self.centralwidget)
-        self.btn_carga.setGeometry(QtCore.QRect(65, 5, 65, 25))
+        self.btn_carga.setGeometry(QtCore.QRect(70, 5, 75, 28))
 
         self.btn_calentar = QtWidgets.QPushButton("Calentar Agua", self.centralwidget)
-        self.btn_calentar.setGeometry(QtCore.QRect(135, 5, 75, 25))
+        self.btn_calentar.setGeometry(QtCore.QRect(150, 5, 90, 28))
 
         self.btn_enfriar = QtWidgets.QPushButton("Enfriar Agua", self.centralwidget)
-        self.btn_enfriar.setGeometry(QtCore.QRect(215, 5, 75, 25))
+        self.btn_enfriar.setGeometry(QtCore.QRect(245, 5, 90, 28))
 
         self.btn_vaciar = QtWidgets.QPushButton("Vaciar Agua", self.centralwidget)
-        self.btn_vaciar.setGeometry(QtCore.QRect(295, 5, 75, 25))
+        self.btn_vaciar.setGeometry(QtCore.QRect(340, 5, 90, 28))
 
     def create_stacked_pages(self):
         font = QtGui.QFont()
-        font.setPointSize(15)
+        font.setPointSize(16)
         font.setBold(True)
         font.setWeight(75)
 
         self.stackedWidget = QtWidgets.QStackedWidget(self.centralwidget)
-        self.stackedWidget.setGeometry(QtCore.QRect(0, 35, 420, 280))
+        self.stackedWidget.setGeometry(QtCore.QRect(0, 40, 480, 320))
         self.stackedWidget.setObjectName("stackedWidget")
 
         # Página 0: Inicio
         self.Inicio = QtWidgets.QWidget()
         self.Inicio.setObjectName("Inicio")
         self.pushButton = QtWidgets.QPushButton(self.Inicio)
-        self.pushButton.setGeometry(QtCore.QRect(170, 110, 85, 40))
+        self.pushButton.setGeometry(QtCore.QRect(200, 140, 85, 40))
         self.pushButton.setObjectName("pushButton")
         self.stackedWidget.addWidget(self.Inicio)
 
@@ -76,28 +76,28 @@ class Ui_MainWindow(object):
         self.CargaAgua.setObjectName("CargaAgua")
 
         self.volumen = QtWidgets.QLabel(self.CargaAgua)
-        self.volumen.setGeometry(QtCore.QRect(150, 50, 60, 35))
+        self.volumen.setGeometry(QtCore.QRect(190, 60, 70, 40))
         self.volumen.setFont(font)
         self.volumen.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
 
         self.unit_vol = QtWidgets.QLabel(self.CargaAgua)
-        self.unit_vol.setGeometry(QtCore.QRect(215, 50, 60, 35))
+        self.unit_vol.setGeometry(QtCore.QRect(265, 60, 60, 40))
         self.unit_vol.setFont(font)
 
         self.caudal = QtWidgets.QLabel(self.CargaAgua)
-        self.caudal.setGeometry(QtCore.QRect(150, 90, 60, 35))
+        self.caudal.setGeometry(QtCore.QRect(190, 110, 70, 40))
         self.caudal.setFont(font)
         self.caudal.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
 
         self.units_caudal = QtWidgets.QLabel(self.CargaAgua)
-        self.units_caudal.setGeometry(QtCore.QRect(215, 90, 60, 35))
+        self.units_caudal.setGeometry(QtCore.QRect(265, 110, 60, 40))
         self.units_caudal.setFont(font)
 
         self.STOP = QtWidgets.QPushButton(self.CargaAgua)
-        self.STOP.setGeometry(QtCore.QRect(165, 180, 85, 40))
+        self.STOP.setGeometry(QtCore.QRect(195, 230, 90, 45))
 
         self.cargando_titulo = QtWidgets.QLabel(self.CargaAgua)
-        self.cargando_titulo.setGeometry(QtCore.QRect(10, 5, 400, 35))
+        self.cargando_titulo.setGeometry(QtCore.QRect(10, 10, 460, 40))
         self.cargando_titulo.setFont(font)
         self.cargando_titulo.setAlignment(QtCore.Qt.AlignCenter)
 
@@ -108,19 +108,19 @@ class Ui_MainWindow(object):
         self.CalentarAgua.setObjectName("CalentarAgua")
 
         self.temp_2 = QtWidgets.QLabel(self.CalentarAgua)
-        self.temp_2.setGeometry(QtCore.QRect(150, 70, 60, 35))
+        self.temp_2.setGeometry(QtCore.QRect(190, 100, 70, 40))
         self.temp_2.setFont(font)
         self.temp_2.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
 
         self.units_2 = QtWidgets.QLabel(self.CalentarAgua)
-        self.units_2.setGeometry(QtCore.QRect(215, 70, 60, 35))
+        self.units_2.setGeometry(QtCore.QRect(265, 100, 60, 40))
         self.units_2.setFont(font)
 
         self.STOP_2 = QtWidgets.QPushButton(self.CalentarAgua)
-        self.STOP_2.setGeometry(QtCore.QRect(165, 180, 85, 40))
+        self.STOP_2.setGeometry(QtCore.QRect(195, 230, 90, 45))
 
         self.calentando_titulo = QtWidgets.QLabel(self.CalentarAgua)
-        self.calentando_titulo.setGeometry(QtCore.QRect(10, 5, 400, 35))
+        self.calentando_titulo.setGeometry(QtCore.QRect(10, 10, 460, 40))
         self.calentando_titulo.setFont(font)
         self.calentando_titulo.setAlignment(QtCore.Qt.AlignCenter)
 
@@ -131,19 +131,19 @@ class Ui_MainWindow(object):
         self.EnfriarAgua.setObjectName("EnfriarAgua")
 
         self.temp_3 = QtWidgets.QLabel(self.EnfriarAgua)
-        self.temp_3.setGeometry(QtCore.QRect(150, 70, 60, 35))
+        self.temp_3.setGeometry(QtCore.QRect(190, 100, 70, 40))
         self.temp_3.setFont(font)
         self.temp_3.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
 
         self.units_3 = QtWidgets.QLabel(self.EnfriarAgua)
-        self.units_3.setGeometry(QtCore.QRect(215, 70, 60, 35))
+        self.units_3.setGeometry(QtCore.QRect(265, 100, 60, 40))
         self.units_3.setFont(font)
 
         self.STOP_3 = QtWidgets.QPushButton(self.EnfriarAgua)
-        self.STOP_3.setGeometry(QtCore.QRect(165, 180, 85, 40))
+        self.STOP_3.setGeometry(QtCore.QRect(195, 230, 90, 45))
 
         self.enfriando_titulo = QtWidgets.QLabel(self.EnfriarAgua)
-        self.enfriando_titulo.setGeometry(QtCore.QRect(10, 5, 400, 35))
+        self.enfriando_titulo.setGeometry(QtCore.QRect(10, 10, 460, 40))
         self.enfriando_titulo.setFont(font)
         self.enfriando_titulo.setAlignment(QtCore.Qt.AlignCenter)
 
@@ -154,28 +154,28 @@ class Ui_MainWindow(object):
         self.VaciarAgua.setObjectName("VaciarAgua")
 
         self.volumen_2 = QtWidgets.QLabel(self.VaciarAgua)
-        self.volumen_2.setGeometry(QtCore.QRect(150, 50, 60, 35))
+        self.volumen_2.setGeometry(QtCore.QRect(190, 60, 70, 40))
         self.volumen_2.setFont(font)
         self.volumen_2.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
 
         self.unit_vol_2 = QtWidgets.QLabel(self.VaciarAgua)
-        self.unit_vol_2.setGeometry(QtCore.QRect(215, 50, 60, 35))
+        self.unit_vol_2.setGeometry(QtCore.QRect(265, 60, 60, 40))
         self.unit_vol_2.setFont(font)
 
         self.caudal_2 = QtWidgets.QLabel(self.VaciarAgua)
-        self.caudal_2.setGeometry(QtCore.QRect(150, 90, 60, 35))
+        self.caudal_2.setGeometry(QtCore.QRect(190, 110, 70, 40))
         self.caudal_2.setFont(font)
         self.caudal_2.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
 
         self.units_caudal_2 = QtWidgets.QLabel(self.VaciarAgua)
-        self.units_caudal_2.setGeometry(QtCore.QRect(215, 90, 60, 35))
+        self.units_caudal_2.setGeometry(QtCore.QRect(265, 110, 60, 40))
         self.units_caudal_2.setFont(font)
 
         self.STOP_4 = QtWidgets.QPushButton(self.VaciarAgua)
-        self.STOP_4.setGeometry(QtCore.QRect(165, 180, 85, 40))
+        self.STOP_4.setGeometry(QtCore.QRect(195, 230, 90, 45))
 
         self.vaciando_titulo = QtWidgets.QLabel(self.VaciarAgua)
-        self.vaciando_titulo.setGeometry(QtCore.QRect(10, 5, 400, 35))
+        self.vaciando_titulo.setGeometry(QtCore.QRect(10, 10, 460, 40))
         self.vaciando_titulo.setFont(font)
         self.vaciando_titulo.setAlignment(QtCore.Qt.AlignCenter)
 
@@ -183,15 +183,15 @@ class Ui_MainWindow(object):
 
     def create_additional_labels(self, parent_widget):
         self.label = QtWidgets.QLabel(parent_widget)
-        self.label.setGeometry(QtCore.QRect(5, 270, 150, 18))
+        self.label.setGeometry(QtCore.QRect(5, 300, 150, 18))
         self.label.setObjectName("label")
 
         self.label_2 = QtWidgets.QLabel(parent_widget)
-        self.label_2.setGeometry(QtCore.QRect(5, 290, 150, 18))
+        self.label_2.setGeometry(QtCore.QRect(5, 320, 150, 18))
         self.label_2.setObjectName("label_2")
 
         self.label_3 = QtWidgets.QLabel(parent_widget)
-        self.label_3.setGeometry(QtCore.QRect(5, 310, 150, 18))
+        self.label_3.setGeometry(QtCore.QRect(5, 340, 150, 18))
         self.label_3.setObjectName("label_3")
 
     def setup_statusbar(self, MainWindow):
@@ -291,6 +291,5 @@ if __name__ == "__main__":
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
-    MainWindow.show()  # <-- Aquí se usa tamaño 420x320, no fullscreen, porque es chiquito
-
+    MainWindow.show()
     sys.exit(app.exec_())
