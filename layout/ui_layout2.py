@@ -26,7 +26,7 @@ class Ui_MainWindow(object):
         self.logo = QtWidgets.QLabel(parent_widget)
         self.logo.setGeometry(QtCore.QRect(520, -10, 100, 100))  # Ajusta posición y tamaño
 
-        pixmap = QtGui.QPixmap("logo.png")
+        pixmap = QtGui.QPixmap("resources/logo.png")
         pixmap = pixmap.scaled(self.logo.width(), self.logo.height(),
                                QtCore.Qt.KeepAspectRatio,
                                QtCore.Qt.SmoothTransformation)
