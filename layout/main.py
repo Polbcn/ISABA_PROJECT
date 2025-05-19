@@ -176,9 +176,12 @@ class MainApp(QMainWindow):
             if self.first_con:
                 self.ui.stackedWidget.setCurrentIndex(6)
                 self.first_con = False
+        elif estado == 7:
+            self.ui.stackedWidget.setCurrentIndex(8)
         else:
             self.ui.stackedWidget.setCurrentIndex(estado)
             self.first_con = True
+
         print(f"Estado: {estado}")
         # print(f"L_olla1: {L_olla1:.2f}, L_olla2: {L_olla2:.2f}")
         # print(f"C_red: {C_red:.2f}, C_olla12: {C_olla12:.2f}")
