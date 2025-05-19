@@ -117,6 +117,9 @@ class SerialThread(QThread):
     def enviar_texto(self, texto):
         self.comandos.append(texto.encode('utf-8'))
 
+    def enviar_vaciado(self):
+        self.comandos.append(b"VACIADO\n")
+
     def _datos_completos(self, datos):
         # Opcional: solo emitir si están todos los datos necesarios
         keys_requeridas = ['estado', 'L_olla1', 'L_olla2', 'C_red', 'C_olla12', 'T_agua']

@@ -187,6 +187,10 @@ class FSM():
         except Exception as e:
             print(f"Error en la comunicacion de la configuracion: {e}")
 
+    def estado7(self):
+        self.PLC.ba_red.value(0)
+        self.PLC.ba_olla12.value(1)
+
     def comunicacion_HMI(self):
         try:
             self.comunicacion.comunicacion(self.estado, self.caudal_acumulado, self.caudal_acumulado2,
@@ -212,6 +216,8 @@ class FSM():
                 self.estado = 1
             elif "CONFIG" in reading:
                 self.estado = 6
+            elif "VACIADO" in reading:
+                self.estado = 7
             else:
                 print("Recibido algo desconocido:")
                 print(reading)
@@ -244,6 +250,8 @@ if __name__ == "__main__":
             PLC.estado5()
         elif PLC.estado == 6:
             PLC.estado6()
+        elif PLC.estado == 7:
+            PLC.estado7()
         else:
             # print("Estado no definido")
             pass

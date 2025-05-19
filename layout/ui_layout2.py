@@ -76,8 +76,11 @@ class Ui_MainWindow(object):
         self.pushButton.setObjectName("pushButton")
         self.stackedWidget.addWidget(self.Inicio)
         self.cleanButton = QtWidgets.QPushButton(self.Inicio)
-        self.cleanButton.setGeometry(QtCore.QRect(280, 100, 85, 40))
+        self.cleanButton.setGeometry(QtCore.QRect(280, 60, 85, 40))
         self.cleanButton.setObjectName("cleanButton")
+        self.vaciarButton = QtWidgets.QPushButton(self.Inicio)
+        self.vaciarButton.setGeometry(QtCore.QRect(280, 140, 85, 40))
+        self.vaciarButton.setObjectName("vaciarButton")
         self.stackedWidget.addWidget(self.Inicio)
         self.btn_config = QtWidgets.QPushButton(self.centralwidget)
         self.btn_config.setGeometry(QtCore.QRect(420, 250, 30, 30))
@@ -310,6 +313,20 @@ class Ui_MainWindow(object):
         self.btn_atras_config = QtWidgets.QPushButton("Atrás", self.Config2)
         self.btn_atras_config.setGeometry(QtCore.QRect(190, 200, 80, 40))
 
+        # Página 8: Vaciado
+        self.Vaciado = QtWidgets.QWidget()
+        self.Vaciado.setObjectName("Vaciado")
+
+        self.vaciado_titulo = QtWidgets.QLabel(self.Vaciado)
+        self.vaciado_titulo.setGeometry(QtCore.QRect(10, 10, 460, 40))
+        self.vaciado_titulo.setFont(font)
+        self.vaciado_titulo.setAlignment(QtCore.Qt.AlignCenter)
+
+        self.STOP_vaciado = QtWidgets.QPushButton(self.Vaciado)
+        self.STOP_vaciado.setGeometry(QtCore.QRect(195, 160, 90, 45))
+
+        self.stackedWidget.addWidget(self.Vaciado)
+
 
 
     def create_additional_labels(self, parent_widget):
@@ -336,6 +353,8 @@ class Ui_MainWindow(object):
 
         self.pushButton.setText(_translate("MainWindow", "Inicio"))
         self.cleanButton.setText(_translate("MainWindow", "Limpieza"))
+        self.vaciarButton.setText(_translate("MainWindow", "Vaciado"))
+
 
 
         self.volumen.setText(_translate("MainWindow", "30"))

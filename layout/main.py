@@ -18,8 +18,10 @@ class MainApp(QMainWindow):
         self.serial_thread = SerialThread()
         self.serial_thread.datos_recibidos.connect(self.actualizar_datos)
         self.ui.cleanButton.clicked.connect(self.enviar_limpieza)
+        self.ui.vaciarButton.clicked.connect(self.serial_thread.enviar_vaciado)
         # Linkeamos los botones de parada a la función stop
         self.ui.STOP_limpieza.clicked.connect(self.stop)
+        self.ui.STOP_vaciado.clicked.connect(self.stop)
         self.ui.STOP.clicked.connect(self.stop)
         self.ui.STOP_2.clicked.connect(self.stop)
         self.ui.STOP_3.clicked.connect(self.stop)

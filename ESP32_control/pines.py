@@ -35,8 +35,8 @@ class ESP32_PLC():
             self.pulsos_olla12 = 0
             self.pulsos_red_totales = 0
             self.pulsos_olla12_totales = 0
-            self.k = 5.72
-            self.p = 400
+            self.k = 7.5
+            self.p = 450
 
         except Exception as e:
             # print("Error en la definicon")
