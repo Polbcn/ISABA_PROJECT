@@ -317,7 +317,7 @@ class Ui_MainWindow(object):
         self.Vaciado = QtWidgets.QWidget()
         self.Vaciado.setObjectName("Vaciado")
 
-        self.vaciado_titulo = QtWidgets.QLabel(self.Vaciado)
+        self.vaciado_titulo = QtWidgets.QLabel("Vaciado", self.Vaciado)
         self.vaciado_titulo.setGeometry(QtCore.QRect(10, 10, 460, 40))
         self.vaciado_titulo.setFont(font)
         self.vaciado_titulo.setAlignment(QtCore.Qt.AlignCenter)
@@ -387,6 +387,7 @@ class Ui_MainWindow(object):
 
         self.limpieza_titulo.setText(_translate("MainWindow", "Limpieza del Sistema"))
         self.STOP_limpieza.setText(_translate("MainWindow", "STOP"))
+        self.STOP_vaciado.setText(_translate("MainWindow", "STOP"))
 
         
 

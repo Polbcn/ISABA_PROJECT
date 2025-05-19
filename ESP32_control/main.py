@@ -54,6 +54,8 @@ class FSM():
         self.PLC.ba_red.value(0)
         self.PLC.ba_olla12.value(0)
         self.prev_time = time.time()
+        self.PLC.reset_volumen_olla12()
+        self.PLC.reset_volumen_red()
         self.caudal_acumulado = 0.0
         self.caudal_acumulado2 = 0.0
         self.timer_agua = 0.0
@@ -75,13 +77,15 @@ class FSM():
     """
     def estado1(self):
         self.PLC.ba_red.value(1)  # Encender bomba de red
+        self.PLC.ba_olla12.value(0)  # Apagar bomba de olla 1/2
+        self.PLC.calefactor.value(1)  # Apagar calefactor
         # self.caudal_acumulado += self.PLC.caudal_red*(time.ticks_ms()-self.prev_time)/60000.0 # Litros
         self.caudal_acumulado = self.PLC.get_volumen_red()  # Litros
         self.prev_time = time.ticks_ms()
         if self.caudal_acumulado >= self.capacidad_olla1:
             self.PLC.ba_red.value(0)  # Apagar bomba de red
             self.temperatura_red_reached = False
-            self.estado = 4
+            self.estado = 2
 
     # Estado 2 -> Proceso 1 (olla 1) 
     # Calentamiento de agua
@@ -104,12 +108,12 @@ class FSM():
             self.estado = 0
             return
         if temperatura >= self.temp_agua:
-            self.PLC.calefactor.value(0)
+            self.PLC.calefactor.value(1)
             if self.temperatura_red_reached == False:
                 self.prev_time = time.time()
             self.temperatura_red_reached = True
         elif temperatura < self.temp_agua:
-            self.PLC.calefactor.value(1)
+            self.PLC.calefactor.value(0)
         
         # Timer que mantiene el agua a la temperatura consigna
         if self.temperatura_red_reached:
@@ -126,6 +130,9 @@ class FSM():
     """ 
     def estado3(self):
         temperatura = self.PLC.get_temp()
+        self.PLC.ba_red.value(0)  # Apagar bomba de red
+        self.PLC.ba_olla12.value(0)  # Apagar bomba de olla 1/2
+        self.PLC.calefactor.value(1)  # Apagar calefactor
         if temperatura <= self.temp_agualow and temperatura != -1:
             self.estado = 4
 
@@ -144,6 +151,8 @@ class FSM():
     """ 
     def estado4(self):
         self.PLC.ba_olla12.value(1)  # Encender bomba de olla 1/2
+        self.PLC.ba_red.value(0)  # Apagar bomba de red
+        self.PLC.calefactor.value(1)  # Apagar calefactor
         # self.caudal_acumulado2 += self.PLC.caudal_olla12*(time.ticks_ms()-self.prev_time)/60000.0 # Litros
         self.caudal_acumulado2 = self.PLC.get_volumen_olla12()
         self.prev_time = time.ticks_ms()
@@ -153,11 +162,15 @@ class FSM():
 
     def estado5(self):
         # Estado de limpieza
+        self.PLC.calefactor.value(1)  # Apagar calefactor
         self.PLC.ba_red.value(1)
         self.PLC.ba_olla12.value(0)
 
     def estado6(self):
         try:
+            self.PLC.ba_red.value(0)
+            self.PLC.ba_olla12.value(0)
+            self.PLC.calefactor.value(1)  # Apagar calefactor
             PLC.comunicacion_HMI()
             texto = self.comunicacion.recibir_comando()
             inicio = texto.find("<")
@@ -189,6 +202,7 @@ class FSM():
 
     def estado7(self):
         self.PLC.ba_red.value(0)
+        self.PLC.calefactor.value(1)  # Apagar calefactor
         self.PLC.ba_olla12.value(1)
 
     def comunicacion_HMI(self):
@@ -253,6 +267,9 @@ if __name__ == "__main__":
         elif PLC.estado == 7:
             PLC.estado7()
         else:
+            PLC.PLC.ba_olla12.value(0)  # Apagar bomba de olla 1/2
+            PLC.PLC.ba_red.value(0)
+            PLC.PLC.calefactor.value(1)
             # print("Estado no definido")
             pass
         #print(f"tiempo: {time.time()-prev_time}")
