@@ -11,6 +11,7 @@ class ESP32_PLC():
         self.rot_red = Pin(27, Pin.IN) #J7
         self.rot_olla12 = Pin(26, Pin.IN) #J8
         self.errores = []
+        
         try:
             # Definicion termopar
             self.i2c = I2C(0, scl=Pin(22), sda=Pin(21), freq=100000)
@@ -32,6 +33,11 @@ class ESP32_PLC():
             self.caudal_olla12 = 0
             self.pulsos_red = 0
             self.pulsos_olla12 = 0
+            self.pulsos_red_totales = 0
+            self.pulsos_olla12_totales = 0
+            self.k = 5.72
+            self.p = 400
+
         except Exception as e:
             # print("Error en la definicon")
             pass
@@ -39,15 +45,17 @@ class ESP32_PLC():
     #Contador flancos rotametro agua de red
     def captar_rot_red(self, pin):
         self.pulsos_red += 1
+        self.pulsos_red_totales += 1
 
     #Contador flancos rotametro agua de olla 1/2
     def captar_rot_olla12(self, pin):
         self.pulsos_olla12 += 1
+        self.pulsos_olla12_totales += 1
 
     # Calculo de caudal de agua de red
     def calcular_caudal1(self, timer):
         try:
-            self.caudal_red = (self.pulsos_red / 7.5)  # L/min
+            self.caudal_red = (self.pulsos_red / self.k)  # L/min
             self.pulsos_red = 0
         except ZeroDivisionError:
             pass
@@ -55,11 +63,23 @@ class ESP32_PLC():
     # Calculo de caudal de agua de olla 1/2
     def calcular_caudal2(self, timer):
         try:
-            self.caudal_olla12 = (self.pulsos_olla12 / 7.5)  # L/min
+            self.caudal_olla12 = (self.pulsos_olla12 / self.k)  # L/min
             self.pulsos_olla12 = 0
         except ZeroDivisionError:
             pass
     
+    def get_volumen_red(self):
+        return self.pulsos_red_totales / self.p
+    
+    def get_volumen_olla12(self):
+        return self.pulsos_olla12_totales / self.p
+    
+    def reset_volumen_red(self):
+        self.pulsos_red_totales = 0
+
+    def reset_volumen_olla12(self):
+        self.pulsos_olla12_totales = 0
+
     def get_temp(self):
         if "Termopar no inicializado" in self.errores:
             return -1

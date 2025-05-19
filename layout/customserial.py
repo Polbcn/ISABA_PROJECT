@@ -110,11 +110,12 @@ class SerialThread(QThread):
 
     def enviar_inicio(self):
         self.comandos.append(b"INICIO\n")
-        # if self.ser:
-        #     try:
-        #         self.ser.write(b'STOP')
-        #     except serial.SerialException as e:
-        #         print(f"Error al enviar limpieza: {e}")
+
+    def enviar_config(self):
+        self.comandos.append(b"CONFIG\n")
+
+    def enviar_texto(self, texto):
+        self.comandos.append(texto.encode('utf-8'))
 
     def _datos_completos(self, datos):
         # Opcional: solo emitir si están todos los datos necesarios

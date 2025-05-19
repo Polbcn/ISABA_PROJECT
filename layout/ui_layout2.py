@@ -59,6 +59,10 @@ class Ui_MainWindow(object):
         font.setPointSize(16)
         font.setBold(True)
         font.setWeight(75)
+        font2 = QtGui.QFont()
+        font2.setPointSize(12)
+        font2.setBold(False)
+        font2.setWeight(60)
 
         self.stackedWidget = QtWidgets.QStackedWidget(self.centralwidget)
         self.stackedWidget.setGeometry(QtCore.QRect(0, 40, 480, 320))
@@ -75,6 +79,12 @@ class Ui_MainWindow(object):
         self.cleanButton.setGeometry(QtCore.QRect(280, 100, 85, 40))
         self.cleanButton.setObjectName("cleanButton")
         self.stackedWidget.addWidget(self.Inicio)
+        self.btn_config = QtWidgets.QPushButton(self.centralwidget)
+        self.btn_config.setGeometry(QtCore.QRect(445, 290, 30, 30))
+        self.btn_config.setIcon(QtGui.QIcon("resources/settings.png"))  # Usa un ícono apropiado
+        self.btn_config.setIconSize(QtCore.QSize(24, 24))
+        self.btn_config.setFlat(True)
+
 
         # Página 1: Carga de Agua
         self.CargaAgua = QtWidgets.QWidget()
@@ -200,6 +210,107 @@ class Ui_MainWindow(object):
 
         self.stackedWidget.addWidget(self.Limpieza)
 
+        # Página 6: Configuración 1 (Volumen Llenado, Temperatura High)
+        self.Config1 = QtWidgets.QWidget()
+        self.Config1.setObjectName("Config1")
+
+        self.param_title1 = QtWidgets.QLabel(self.Config1)
+        self.param_title1.setGeometry(QtCore.QRect(10, 10, 460, 40))
+        self.param_title1.setFont(font)
+        self.param_title1.setAlignment(QtCore.Qt.AlignCenter)
+        self.param_title1.setText("Parámetros (1/2)")
+
+        # Volumen Llenado
+        self.lbl_vol_llenado = QtWidgets.QLabel("Volumen Llenado:", self.Config1)
+        self.lbl_vol_llenado.setGeometry(QtCore.QRect(60, 70, 200, 40))
+        self.lbl_vol_llenado.setFont(font2)
+
+        self.btn_dec_vol_llenado = QtWidgets.QPushButton("-", self.Config1)
+        self.btn_dec_vol_llenado.setGeometry(QtCore.QRect(240, 70, 40, 40))
+
+        self.val_vol_llenado = QtWidgets.QLabel("15", self.Config1)
+        self.val_vol_llenado.setGeometry(QtCore.QRect(285, 70, 40, 40))
+        self.val_vol_llenado.setFont(font)
+        self.val_vol_llenado.setAlignment(QtCore.Qt.AlignCenter)
+
+        self.btn_inc_vol_llenado = QtWidgets.QPushButton("+", self.Config1)
+        self.btn_inc_vol_llenado.setGeometry(QtCore.QRect(330, 70, 40, 40))
+
+        # Temperatura High
+        self.lbl_temp_high = QtWidgets.QLabel("Temperatura High:", self.Config1)
+        self.lbl_temp_high.setGeometry(QtCore.QRect(60, 130, 200, 40))
+        self.lbl_temp_high.setFont(font2)
+
+        self.btn_dec_temp_high = QtWidgets.QPushButton("-", self.Config1)
+        self.btn_dec_temp_high.setGeometry(QtCore.QRect(240, 130, 40, 40))
+
+        self.val_temp_high = QtWidgets.QLabel("100", self.Config1)
+        self.val_temp_high.setGeometry(QtCore.QRect(285, 130, 40, 40))
+        self.val_temp_high.setFont(font)
+        self.val_temp_high.setAlignment(QtCore.Qt.AlignCenter)
+
+        self.btn_inc_temp_high = QtWidgets.QPushButton("+", self.Config1)
+        self.btn_inc_temp_high.setGeometry(QtCore.QRect(330, 130, 40, 40))
+
+        # Botón para ir a siguiente página
+        self.btn_siguiente_config = QtWidgets.QPushButton("Siguiente", self.Config1)
+        self.btn_siguiente_config.setGeometry(QtCore.QRect(190, 200, 100, 40))
+
+        self.stackedWidget.addWidget(self.Config1)
+
+
+        # Página 7: Configuración 2 (Temperatura Low, Volumen Vaciado)
+        self.Config2 = QtWidgets.QWidget()
+        self.Config2.setObjectName("Config2")
+
+        self.param_title2 = QtWidgets.QLabel(self.Config2)
+        self.param_title2.setGeometry(QtCore.QRect(10, 10, 460, 40))
+        self.param_title2.setFont(font)
+        self.param_title2.setAlignment(QtCore.Qt.AlignCenter)
+        self.param_title2.setText("Parámetros (2/2)")
+
+        # Temperatura Low
+        self.lbl_temp_low = QtWidgets.QLabel("Temperatura Low:", self.Config2)
+        self.lbl_temp_low.setGeometry(QtCore.QRect(60, 70, 200, 40))
+        self.lbl_temp_low.setFont(font2)
+
+        self.btn_dec_temp_low = QtWidgets.QPushButton("-", self.Config2)
+        self.btn_dec_temp_low.setGeometry(QtCore.QRect(240, 70, 40, 40))
+
+        self.val_temp_low = QtWidgets.QLabel("80", self.Config2)
+        self.val_temp_low.setGeometry(QtCore.QRect(285, 70, 40, 40))
+        self.val_temp_low.setFont(font)
+        self.val_temp_low.setAlignment(QtCore.Qt.AlignCenter)
+
+        self.btn_inc_temp_low = QtWidgets.QPushButton("+", self.Config2)
+        self.btn_inc_temp_low.setGeometry(QtCore.QRect(330, 70, 40, 40))
+
+        # Volumen Vaciado
+        self.lbl_vol_vaciado = QtWidgets.QLabel("Volumen Vaciado:", self.Config2)
+        self.lbl_vol_vaciado.setGeometry(QtCore.QRect(60, 130, 200, 40))
+        self.lbl_vol_vaciado.setFont(font2)
+
+        self.btn_dec_vol_vaciado = QtWidgets.QPushButton("-", self.Config2)
+        self.btn_dec_vol_vaciado.setGeometry(QtCore.QRect(240, 130, 40, 40))
+
+        self.val_vol_vaciado = QtWidgets.QLabel("10", self.Config2)
+        self.val_vol_vaciado.setGeometry(QtCore.QRect(285, 130, 40, 40))
+        self.val_vol_vaciado.setFont(font)
+        self.val_vol_vaciado.setAlignment(QtCore.Qt.AlignCenter)
+
+        self.btn_inc_vol_vaciado = QtWidgets.QPushButton("+", self.Config2)
+        self.btn_inc_vol_vaciado.setGeometry(QtCore.QRect(330, 130, 40, 40))
+
+        # Botón para volver al inicio
+        self.btn_guardar_config = QtWidgets.QPushButton("Guardar", self.Config2)
+        self.btn_guardar_config.setGeometry(QtCore.QRect(280, 200, 100, 40))
+
+        self.stackedWidget.addWidget(self.Config2)
+        # Botón para volver a la página anterior (Configuración 1)
+        self.btn_atras_config = QtWidgets.QPushButton("Atrás", self.Config2)
+        self.btn_atras_config.setGeometry(QtCore.QRect(190, 200, 80, 40))
+
+
 
     def create_additional_labels(self, parent_widget):
         self.label = QtWidgets.QLabel(parent_widget)
@@ -258,6 +369,8 @@ class Ui_MainWindow(object):
         self.limpieza_titulo.setText(_translate("MainWindow", "Limpieza del Sistema"))
         self.STOP_limpieza.setText(_translate("MainWindow", "STOP"))
 
+        
+
 
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Escape:
@@ -309,6 +422,12 @@ class Ui_MainWindow(object):
         self.btn_calentar.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(2))
         self.btn_enfriar.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(3))
         self.btn_vaciar.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(4))
+        # self.btn_config.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(6))
+        self.btn_siguiente_config.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(7))
+        # self.btn_guardar_config.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(0))
+        self.btn_atras_config.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(6))
+
+
 
 
 if __name__ == "__main__":

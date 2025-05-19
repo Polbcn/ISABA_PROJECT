@@ -58,6 +58,8 @@ class FSM():
         self.caudal_acumulado2 = 0.0
         self.timer_agua = 0.0
         self.temperatura_red_reached = False
+        self.PLC.reset_volumen_olla12
+        self.PLC.reset_volumen_red()
         # Espera a que el usuario inice el proceso
 
     #Estado 1-> Cargando agua de red
@@ -73,12 +75,13 @@ class FSM():
     """
     def estado1(self):
         self.PLC.ba_red.value(1)  # Encender bomba de red
-        self.caudal_acumulado += self.PLC.caudal_red*(time.time()-self.prev_time)/60.0 # Litros
-        self.prev_time = time.time()
+        # self.caudal_acumulado += self.PLC.caudal_red*(time.ticks_ms()-self.prev_time)/60000.0 # Litros
+        self.caudal_acumulado = self.PLC.get_volumen_red()  # Litros
+        self.prev_time = time.ticks_ms()
         if self.caudal_acumulado >= self.capacidad_olla1:
             self.PLC.ba_red.value(0)  # Apagar bomba de red
             self.temperatura_red_reached = False
-            self.estado = 3
+            self.estado = 4
 
     # Estado 2 -> Proceso 1 (olla 1) 
     # Calentamiento de agua
@@ -141,8 +144,9 @@ class FSM():
     """ 
     def estado4(self):
         self.PLC.ba_olla12.value(1)  # Encender bomba de olla 1/2
-        self.caudal_acumulado2 += self.PLC.caudal_olla12*(time.time()-self.prev_time)/60.0 # Litros
-        self.prev_time = time.time()
+        # self.caudal_acumulado2 += self.PLC.caudal_olla12*(time.ticks_ms()-self.prev_time)/60000.0 # Litros
+        self.caudal_acumulado2 = self.PLC.get_volumen_olla12()
+        self.prev_time = time.ticks_ms()
         if self.caudal_acumulado2 >= self.capacidad_olla2:
             self.PLC.ba_olla12.value(0)  # Encender bomba de olla 1/2
             self.estado = 0
@@ -151,6 +155,37 @@ class FSM():
         # Estado de limpieza
         self.PLC.ba_red.value(1)
         self.PLC.ba_olla12.value(0)
+
+    def estado6(self):
+        try:
+            PLC.comunicacion_HMI()
+            texto = self.comunicacion.recibir_comando()
+            inicio = texto.find("<")
+            fin = texto.find(">", inicio)
+            if inicio != -1 and fin != -1:
+                valor = texto[inicio+1:fin]
+                contenido = valor[1:-1]
+                partes = contenido.split(',')
+                for parte in partes:
+                    id_var = parte[0]
+                    valor = parte[1:]
+                    try:
+                        if id_var == 'T':
+                            self.temp_agua = float(valor)
+                        elif id_var == 'V':
+                            self.capacidad_olla1 = float(valor)
+                        elif id_var == 'I':
+                            self.temp_agualow = float(valor)
+                        elif id_var == 'Q':
+                            self.capacidad_olla2 = float(valor)
+                        self.estado = 0
+                    except ValueError:
+                        print(f"Valor inválido: {valor}")
+                    print(valor)
+            else:
+                print("No se encontraron los delimitadores '<' y '>'")
+        except Exception as e:
+            print(f"Error en la comunicacion de la configuracion: {e}")
 
     def comunicacion_HMI(self):
         try:
@@ -175,6 +210,8 @@ class FSM():
                 pass
             elif "INICIO" in reading:
                 self.estado = 1
+            elif "CONFIG" in reading:
+                self.estado = 6
             else:
                 print("Recibido algo desconocido:")
                 print(reading)
@@ -205,12 +242,14 @@ if __name__ == "__main__":
             PLC.estado4()
         elif PLC.estado == 5:
             PLC.estado5()
+        elif PLC.estado == 6:
+            PLC.estado6()
         else:
             # print("Estado no definido")
             pass
         #print(f"tiempo: {time.time()-prev_time}")
         # Comunicacion con la HMI
-        if time.ticks_ms()-prev_time >= 200:
+        if time.ticks_ms()-prev_time >= 200 and PLC.estado != 6:
             PLC.comunicacion_HMI()
             prev_time = time.ticks_ms()
             PLC.recibir_datos()
