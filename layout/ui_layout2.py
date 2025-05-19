@@ -80,7 +80,7 @@ class Ui_MainWindow(object):
         self.cleanButton.setObjectName("cleanButton")
         self.stackedWidget.addWidget(self.Inicio)
         self.btn_config = QtWidgets.QPushButton(self.centralwidget)
-        self.btn_config.setGeometry(QtCore.QRect(445, 290, 30, 30))
+        self.btn_config.setGeometry(QtCore.QRect(420, 250, 30, 30))
         self.btn_config.setIcon(QtGui.QIcon("resources/settings.png"))  # Usa un ícono apropiado
         self.btn_config.setIconSize(QtCore.QSize(24, 24))
         self.btn_config.setFlat(True)
