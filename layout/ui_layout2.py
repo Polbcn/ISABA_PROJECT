@@ -19,7 +19,7 @@ class Ui_MainWindow(object):
         self.connect_buttons()
         MainWindow.keyPressEvent = self.keyPressEvent
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-        MainWindow.showFullScreen()
+        # MainWindow.showFullScreen()
 
     def add_logo(self, parent_widget):
         self.logo = QtWidgets.QLabel(parent_widget)
@@ -68,8 +68,12 @@ class Ui_MainWindow(object):
         self.Inicio = QtWidgets.QWidget()
         self.Inicio.setObjectName("Inicio")
         self.pushButton = QtWidgets.QPushButton(self.Inicio)
-        self.pushButton.setGeometry(QtCore.QRect(200, 140, 85, 40))
+        self.pushButton.setGeometry(QtCore.QRect(120, 100, 85, 40))
         self.pushButton.setObjectName("pushButton")
+        self.stackedWidget.addWidget(self.Inicio)
+        self.cleanButton = QtWidgets.QPushButton(self.Inicio)
+        self.cleanButton.setGeometry(QtCore.QRect(280, 100, 85, 40))
+        self.cleanButton.setObjectName("cleanButton")
         self.stackedWidget.addWidget(self.Inicio)
 
         # Página 1: Carga de Agua
@@ -182,6 +186,21 @@ class Ui_MainWindow(object):
 
         self.stackedWidget.addWidget(self.VaciarAgua)
 
+        # Página 5: Limpieza
+        self.Limpieza = QtWidgets.QWidget()
+        self.Limpieza.setObjectName("Limpieza")
+
+        self.limpieza_titulo = QtWidgets.QLabel(self.Limpieza)
+        self.limpieza_titulo.setGeometry(QtCore.QRect(10, 10, 460, 40))
+        self.limpieza_titulo.setFont(font)
+        self.limpieza_titulo.setAlignment(QtCore.Qt.AlignCenter)
+
+        self.STOP_limpieza = QtWidgets.QPushButton(self.Limpieza)
+        self.STOP_limpieza.setGeometry(QtCore.QRect(195, 160, 90, 45))
+
+        self.stackedWidget.addWidget(self.Limpieza)
+
+
     def create_additional_labels(self, parent_widget):
         self.label = QtWidgets.QLabel(parent_widget)
         self.label.setGeometry(QtCore.QRect(5, 260, 150, 18))
@@ -205,6 +224,8 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "Sistema Agua"))
 
         self.pushButton.setText(_translate("MainWindow", "Inicio"))
+        self.cleanButton.setText(_translate("MainWindow", "Limpieza"))
+
 
         self.volumen.setText(_translate("MainWindow", "30"))
         self.unit_vol.setText(_translate("MainWindow", "L"))
@@ -233,6 +254,10 @@ class Ui_MainWindow(object):
         self.label.setText(_translate("MainWindow", "ISABA 2025"))
         self.label_2.setText(_translate("MainWindow", "German Bueno"))
         self.label_3.setText(_translate("MainWindow", "Pol Pavo"))
+
+        self.limpieza_titulo.setText(_translate("MainWindow", "Limpieza del Sistema"))
+        self.STOP_limpieza.setText(_translate("MainWindow", "STOP"))
+
 
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Escape:
