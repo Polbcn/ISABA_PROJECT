@@ -19,7 +19,7 @@ class Ui_MainWindow(object):
         self.connect_buttons()
         MainWindow.keyPressEvent = self.keyPressEvent
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-        # MainWindow.showFullScreen()
+        MainWindow.showFullScreen()
 
     def add_logo(self, parent_widget):
         self.logo = QtWidgets.QLabel(parent_widget)
