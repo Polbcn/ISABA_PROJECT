@@ -6,7 +6,7 @@ class ESP32_PLC():
         # Definicion de pines de salida
         self.ba_red = Pin(18, Pin.OUT)
         self.ba_olla12 = Pin(5, Pin.OUT)
-        self.calefactor = Pin(19, Pin.OUT)
+        self.calefactor = Pin(17, Pin.OUT)
         self.calefactor.value(1)
         # Definicion de pines de entrada
         self.rot_red = Pin(27, Pin.IN) #J7

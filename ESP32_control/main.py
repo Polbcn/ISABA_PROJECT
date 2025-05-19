@@ -53,6 +53,7 @@ class FSM():
     def estado0(self):
         self.PLC.ba_red.value(0)
         self.PLC.ba_olla12.value(0)
+        self.PLC.calefactor.value(1)
         self.prev_time = time.time()
         self.PLC.reset_volumen_olla12()
         self.PLC.reset_volumen_red()
@@ -107,17 +108,17 @@ class FSM():
             # print("Error en la lectura de temperatura")
             self.estado = 0
             return
-        if temperatura >= self.temp_agua:
+        if temperatura >= self.temp_agua+2:
             self.PLC.calefactor.value(1)
             if self.temperatura_red_reached == False:
                 self.prev_time = time.time()
             self.temperatura_red_reached = True
-        elif temperatura < self.temp_agua:
+        elif temperatura < self.temp_agua-2:
             self.PLC.calefactor.value(0)
         
         # Timer que mantiene el agua a la temperatura consigna
         if self.temperatura_red_reached:
-            self.timer_agua += time.time() - self.prev_time
+            self.timer_agua += (time.time() - self.prev_time)
             self.prev_time = time.time()
             if self.timer_agua >= self.tiempo_espera_agua_min*60.0:
                 self.estado = 3
@@ -176,8 +177,8 @@ class FSM():
             inicio = texto.find("<")
             fin = texto.find(">", inicio)
             if inicio != -1 and fin != -1:
-                valor = texto[inicio+1:fin]
-                contenido = valor[1:-1]
+                contenido = texto[inicio+1:fin]
+                #contenido = valor[1:-1]
                 partes = contenido.split(',')
                 for parte in partes:
                     id_var = parte[0]
